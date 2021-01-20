@@ -20,7 +20,7 @@
 					<a href="index.jsp" class="logo">Sajin Gallery</a>
 					<nav id="nav">
 						<a href="index.jsp?page=now.html">전시정보</a>
-						<a href="index.jsp?page=gallery.jsp">갤러리</a>
+						<a href="index.jsp?page=maingallery.jsp">갤러리</a>
 						<a href="index.jsp?page=GestbookForm.jsp">방명록</a>
 						<a href="#">문의</a>
 						<%if(session.getAttribute("cus_id")==null){
