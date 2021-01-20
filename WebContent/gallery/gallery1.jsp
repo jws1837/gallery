@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@page import="java.util.List"%>
+<%@page import="model.GalleryDTO"%>
+<%@page import="model.GalleryDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +27,12 @@
 </head>
 
 <body>
+<% 
+GalleryDAO galleryDAO = new GalleryDAO();
+GalleryDTO galleryDTO = new GalleryDTO();
+List  galleryList = galleryDAO.listGallery(galleryDTO);
 
+%>
 
     <!-- Page Content -->
     <div class="container">

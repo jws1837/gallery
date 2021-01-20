@@ -75,21 +75,22 @@ public class GalleryDAO {
 		return cnt;
 	}
 //	
-	public int galUpdate (GalleryDTO galDTO)throws SQLException {			////갤러리 게시글  수정
-		sql = "update gallery set cus_pw=?,cus_tel=?,cus_email=? where cus_id=?";
+	public int galUpdate (GalleryDTO galDTO,String titleSearch)throws SQLException {			////갤러리 게시글  수정
+		sql = "update gallery set filename=?,title =?,author=?,content=? where title=?";
 		pstmt=conn.prepareStatement(sql);
 		pstmt.setString(1, galDTO.getFileName());
 		pstmt.setString(2, galDTO.getTitle());
 		pstmt.setString(3, galDTO.getAuthor());
 		pstmt.setString(4, galDTO.getContent());
+		pstmt.setString(5, titleSearch);
 		cnt = pstmt.executeUpdate();
 		return cnt;
 	}
-	public List listGallery(GalleryDTO galleryDTO) {
+	public List listGallery(GalleryDTO galleryDTO) throws SQLException {
 		
 		List<GalleryDTO> galleryList= new ArrayList();
 		sql = "select * from gallery";
-		try {
+		
 			pstmt=conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -107,9 +108,7 @@ public class GalleryDAO {
 			rs.close();
 			pstmt.close();
 			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
 		
 		
 		return galleryList;

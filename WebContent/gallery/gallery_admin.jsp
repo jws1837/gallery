@@ -9,6 +9,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>갤러리 게시글 관리목록</title>
+<style>
+a:link, a:visited {
+  background-color: #f22336;
+  color: white;
+  padding: 10px 10px ;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+.link{ /* 수정삭제버튼 너무 왼쪽에 있어서 */
+margin-left: 20px;
+   
+}
+#abcd{
+		height: 100px;
+       width       : 100px;
+       text-overflow: ellipsis; 
+       overflow     : hidden; 
+       }
+
+</style>
 </head>
 
 <body>
@@ -19,26 +44,9 @@ List  galleryList = galleryDAO.listGallery(galleryDTO);
 
 %>
 	<center>
-		<h1>글 목록</h1>
+		<h1>갤러리 관리</h1>
 	
-		<!--  검색 시작  -->
-		<form action="getBoardList.jsp" method="get">
-			<table border="1" cellpadding="0" cellspacing="0" width="700">
-				<tr>
-					<td align="right">
-						<select id="searchCondition" name="searchCondition">
-							<option value="TITLE">제목</option>
-							<option value="CONTENT">내용</option>
-						</select>
-						<input id="searchKeyword" name="searchKeyword" type="text">
-						<input type="submit" value="검색 ">
-					</td>
-				</tr>		
-			</table>
-		</form>
-		<!-- 검색 종료  -->
-	
-		<table border="1" cellpadding="0" cellspacing="0" width="700">
+		<table border="1" cellpadding="0" cellspacing="0" width="700"  >
 			<tr>
 				<th bgcolor="gray" width="200">사진</th>
 				<th bgcolor="gray" width="150">제목</th>
@@ -55,17 +63,24 @@ List  galleryList = galleryDAO.listGallery(galleryDTO);
 				String fileName=galleryDTO2.getFileName();
 				String title =galleryDTO2.getTitle();
 				String author =galleryDTO2.getAuthor();
-				String content =galleryDTO2.getContent();
+				String contentSrc =galleryDTO2.getContent();
+				String content=null;
+				if(contentSrc.length()<10){
+					content = galleryDTO2.getContent();
+				}else{
+					content = galleryDTO2.getContent().substring(1,10)+"...";
+				}
+				
 			%>
 			
 			
-			<tr>
-			<td><img src="../gallery/uploadImage/<%=fileName %>"  width="100px" height="100px"></td>
-			<td><%=title%></td>
-			<td><%=author%></td>
-			<td><%=content %></td>
-			<td><a href="../modify.gl?title=<%=title%>">수정하기</a></td>
-			<td><a href="../delete.gl?title=<%=title%>">삭제하기</a></td>
+			<tr nowrap width="20" height="20"  >
+			<td nowrap><img src="../gallery/uploadImage/<%=fileName %>"  width="100px" height="100px"></td>
+			<td nowrap><%=title%></td>
+			<td nowrap><%=author%></td>
+			<td id="abcd" nowrap><%=content %></td>
+			<td><a class="link" href="../modify.gl?title=<%=title%>">수정</a></td>
+			<td><a class="link" href="../delete.gl?title=<%=title%>">삭제</a></td>
 			
 			</tr>
 			<%} %>

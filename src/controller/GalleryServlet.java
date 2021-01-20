@@ -39,14 +39,12 @@ public class GalleryServlet extends HttpServlet {
 			try {
 				doHandle(request,response);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			doHandle(request,response);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}}
 
@@ -59,7 +57,8 @@ public class GalleryServlet extends HttpServlet {
 		String context = request.getContextPath();
 		String uri = request.getRequestURI();
 		String command = uri.substring(context.length());
-		
+	/**================================================갤러리 게시글 등록,수정,삭제====================**/
+		/**갤러리 게시글 등록.**/
 		if(command.equals("/gallery/register.gl")) {
 			String savePath = request.getServletContext().getRealPath("gallery/uploadImage");
 			int sizeLimit = 1024*1024*15; //1byte단위
@@ -87,7 +86,7 @@ public class GalleryServlet extends HttpServlet {
 			
 			response.sendRedirect("gallery_admin.jsp");
 		}
-		
+		/**갤러리 게시글 삭제.**/
 		else if(command.equals("/delete.gl")){
 			String title = request.getParameter("title");
 			try {
@@ -101,204 +100,58 @@ public class GalleryServlet extends HttpServlet {
 			String fullPath = savePath+galleryDTO.getFileName();
 			File file = new File(fullPath);
 			file.delete();
-			out.println("삭제되었습니다.");
-			}
+			out.println("<script>location.href='gallery/gallery_admin.jsp'</script>");
+		}
+		/**갤러리 게시글 폼으로 이동**/
 		else if(command.equals("/modify.gl")) {
-			String title = request.getParameter("title");
-			
-			ArrayList list  =galleryDAO.galleryModifySearch(title);;
-			out.print(2);
+			String titleSearch = request.getParameter("title"); //됨
+			ArrayList list  =galleryDAO.galleryModifySearch(titleSearch);
+			request.setAttribute("title", titleSearch);
 			RequestDispatcher dis = request.getRequestDispatcher("gallery/galleryModifyForm.jsp");
-			out.print(3);
 			request.setAttribute("list", list);
-			out.print(4);
 			dis.forward(request, response);
 			
+		/**게시글폼에서 수정누르면 업데이트**/	
+		}	else if(command.equals("/update.gl")) {
+			String savePath = request.getServletContext().getRealPath("gallery/uploadImage");
+			int sizeLimit = 1024*1024*15; //1byte단위
+			MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy()); 
+		
+			
+			String titleSearch = multi.getParameter("titlesearch"); 
+			String title= multi.getParameter("title");
+			String author = multi.getParameter("author");
+			String content = multi.getParameter("content");
+			
+			String fileName = multi.getFilesystemName("file"); //말그대로 파일이름만.
+			
+//			String fileFullPath = savePath+"/"+fileName; //서버저장경로
+			GalleryDTO galleryDTO = new GalleryDTO();
+			GalleryDAO galleryDAO = new GalleryDAO();
+			galleryDTO.setAuthor(author);
+			galleryDTO.setContent(content);
+			galleryDTO.setFileName(fileName);
+			galleryDTO.setTitle(title);
+			try {
+				galleryDAO.galUpdate(galleryDTO,titleSearch);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			out.println("수정되었습니다.");
+			
+			out.println("<script>location.href='gallery/gallery_admin.jsp'</script>");
+			
+//			String title = request.getParameter("title");
+//			
+//			ArrayList list  =galleryDAO.galleryModifySearch(title);;
+//			RequestDispatcher dis = request.getRequestDispatcher("gallery/galleryModifyForm.jsp");
+//			request.setAttribute("list", list);
+//			dis.forward(request, response);
+			
 			
 		}
-//			response.sendRedirect("gallery/gallery_admin.jsp");
-			
-			
-//			request.setAttribute("msg", "deleted");
-//			RequestDispatcher dispatch =request.getRequestDispatcher("gallery/gallery_admin.jsp");
-//			dispatch.forward(request, response);
-		}
-//		String requestURI = request.getRequestURI();
-//		String contextPath = request.getContextPath();
-//		String command = requestURI.substring(contextPath.length());
-//		HttpSession session=request.getSession();
-//		if(command.equals("/GalleryRegister.gl")) {
-//		}
-//		MyUtil myUtil = new MyUtil();
-
-//		String cp = request.getContextPath();
-//
-//		String uri = request.getRequestURI();
-//
-//		String url;
-//
-//		// 파일 업로드 위치 지정
-//
-//		String root = getServletContext().getRealPath("/");
-//
-//		String path = root + File.separator + "pds" + File.separator+ "imageFile";
-//
-//		File f = new File(path);
-//
-//		if (!f.exists()) {
-//
-//			f.mkdirs();
-//
-//		}
-//
-//
-//
-//		if (uri.indexOf("write.do") != -1) {
-//
-//			url = "/imageTest/write.jsp";
-//
-//			forward(request, response, url);
-//
-//
-//
-//		} else if (uri.indexOf("write_ok.do") != -1) {
-//
-//			String encType = "UTF-8";
-//
-//			
-//
-//			int maxSize = 10 * 1024 * 1024;
-//
-//			// 파일 업로드
-//
-//			MultipartRequest mr = new MultipartRequest(request, path, maxSize,encType, new DefaultFileRenamePolicy());
-//
-//			// DB에 파일정보 입력
-//
-//			// 업로드한 파일로부터 정보 추출
-//
-////			if (mr.getFile("uploadFile") != null) {// null이 아니면 파일이 제대로 업로드된것
-////
-////				GalleryDTO dto = new GalleryDTO();
-////
-////				int maxNum = galleryDAO.getMaxNum();
-////
-////				dto.setNum(maxNum + 1);
-////
-////				dto.setSubject(mr.getParameter("subject"));
-////
-////				dto.setSaveFileName(mr.getFilesystemName("uploadFile"));
-////
-////				dao.insertData(dto);
-////
-////			}
-//
-//			// list.do 페이지로 리다이렉트
-//
-//			url = cp + "/image/list.do";
-//
-//			response.sendRedirect(url);
-//
-//
-//
-//		} else if (uri.indexOf("list.do") != -1) {
-//
-//			String pageNum = req.getParameter("pageNum");
-//
-//			int currentPage = 1; // 처음 띄우는 리스트 페이지
-//
-//			if (pageNum != null) {
-//
-//				currentPage = Integer.parseInt(pageNum);
-//
-//			}
-//
-//			int dataCount = dao.getDataCount();
-//
-//			int numPerPage = 9;
-//
-//			int totalPage = myUtil.getPageCount(numPerPage, dataCount);
-//
-//			if (currentPage > totalPage)
-//
-//				currentPage = totalPage;
-//
-//			int start = (currentPage - 1) * numPerPage + 1;
-//
-//			int end = currentPage * numPerPage;
-//
-//			String listUrl = cp + "/image/list.do";
-//
-//			List<imageTestDTO> lists = dao.getList(start, end);
-//
-//			String pageIndexList = myUtil.pageIndexList(currentPage, totalPage,
-//
-//					listUrl);
-//
-//			// 삭제경로
-//
-//			String deletePath = cp + "/image/delete.do";
-//
-//			// 이미지파일경로
-//
-//			String imagePath = cp + "/pds/imageFile";
-//
-//			req.setAttribute("imagePath", imagePath);
-//
-//			
-//
-//			int totalArticle = dao.getDataCount();
-//
-//			// 파일정보 테이블을 리스트로 전달
-//
-//			req.setAttribute("lists", lists);
-//
-//			req.setAttribute("pageNum", pageNum);
-//
-//			req.setAttribute("currentPage", currentPage);
-//
-//			req.setAttribute("deletePath", deletePath);
-//
-//			req.setAttribute("pageIndexList", pageIndexList);
-//
-//			req.setAttribute("totalArticle", totalArticle);
-//
-//			req.setAttribute("totalPage", totalPage);
-//
-//			
-//
-//			// list.jsp 페이지로 포워드
-//
-//			url = "/imageTest/list.jsp";
-//
-//			forward(req, resp, url);
-//
-//
-//
-//		} else if (uri.indexOf("delete.do") != -1) {
-//
-//			int num = Integer.parseInt(req.getParameter("num"));
-//
-//			int pageNum = Integer.parseInt(req.getParameter("pageNum"));
-//
-//					
-//
-//			imageTestDTO dto = dao.getReadData(num);
-//
-//			// 물리적 파일 삭제
-//
-//			FileManager.doFileDelete(dto.getSaveFileName(), path);
-//
-//			// 테이블 정보 삭제
-//
-//			dao.deleteData(num);
-//
-//			// 삭제 진행 후 리스트 페이지로 리다이렉트
-//
-//			url = cp + "/image/list.do?pageNum=" + pageNum;
-//
-//			resp.sendRedirect(url);
 
 		
 	}
+}
 
