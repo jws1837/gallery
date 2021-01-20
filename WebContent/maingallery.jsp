@@ -7,11 +7,13 @@
 <html lang="en">
     <style>
         .card-title{
-            color: black;
+            color: red;
         }
         .my-4{
         color:red;
         }
+       
+       
     </style>
 <head>
 
@@ -82,7 +84,6 @@
 		GalleryDAO galleryDAO = new GalleryDAO();
 		GalleryDTO galleryDTO = new GalleryDTO();
 		List  galleryList = galleryDAO.listGallery(galleryDTO);
-		
 		%>
 
 			<%
@@ -96,22 +97,23 @@
 			
 
 
-			 <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="detailPage[i].html"><img class="card-img-top" src="gallery/uploadImage/<%=fileName %>" alt="images/7004001.jpg" width="300px" height="100px"></a>
+			 <div  class="col-lg-4 col-md-6 mb-4" >
+            <div  class="card h-100">
+              <a href="detailPage[i].html"><img class="card-img-top" src="gallery/uploadImage/<%=fileName %>" width="200" height="200" alt="/gallery/uploadImage/7004001.jpg" width="300px" height="100px"></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="detailPage[i].html">#<%=i+1 %> <%=title%></a>
+                  <a href="detailPage[i].html">#<%=i+1 %></a>
                 </h4>
-                <h5><%=title%></h5>
+                <h5 style="color:#c8daf7"><%=title%></h5>
                 <p class="card-text"><%=content %></p>
               </div>
               
             </div>
           </div>
 
-        </div>
+        
         <%} %>
+        </div>
         <!-- /.row -->
 
       </div>

@@ -55,12 +55,23 @@ public class GalleryDAO {
 	
 	
 
-	public int galDelete(String title, String author)throws SQLException {    ////갤러리 게시글  삭제
-		sql = "delete from gallery where title=? and author=?";
+	public int galDelete(String title)throws SQLException {    ////갤러리 게시글  삭제
+		sql = "delete from gallery where title=? ";
 		pstmt=conn.prepareStatement(sql);
 		pstmt.setString(1, title);
-		pstmt.setString(2, author);
 		cnt = pstmt.executeUpdate();
+		
+		
+//		sql = "select filename from gallery where title=?";
+//		pstmt=conn.prepareStatement(sql);
+//		pstmt.setString(1, title);
+//		ResultSet rs = pstmt.executeQuery();
+//		String fileName=null;
+//		while(rs.next()){
+//			fileName = rs.getString(1);
+//		}
+//		GalleryDTO galleryDTO = new GalleryDTO();
+//		galleryDTO.setFileName(fileName);
 		return cnt;
 	}
 //	
@@ -109,6 +120,23 @@ public class GalleryDAO {
 	public GalleryDTO getrealdata() {
 		
 		return null;
+	}
+	public ArrayList<GalleryDTO> galleryModifySearch(String title) throws SQLException {
+		ArrayList<GalleryDTO> list = new ArrayList<GalleryDTO>(); 
+		GalleryDTO galleryDTO= new model.GalleryDTO();
+		sql = "select * from gallery where title=? ";
+		pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, title);
+		ResultSet rs =  pstmt.executeQuery();
+		while(rs.next()) {
+			galleryDTO.setFileName(rs.getString("filename"));
+			galleryDTO.setTitle(rs.getString("title"));
+			galleryDTO.setAuthor(rs.getString("author"));
+			galleryDTO.setContent(rs.getString("content"));
+			list.add(galleryDTO);
+		}
+		return list;
+		
 	}
 	
 

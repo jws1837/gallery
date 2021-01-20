@@ -64,8 +64,8 @@ List  galleryList = galleryDAO.listGallery(galleryDTO);
 			<td><%=title%></td>
 			<td><%=author%></td>
 			<td><%=content %></td>
-			<td><form name=<%=i+1 %>> method="post" action=""><input type="submit" value="수정하기"></form></td>
-			<td><form name="delete<%=i+1 %>" method="post" action=""><input type="submit" value="수정하기"></form></td>
+			<td><a href="../modify.gl?title=<%=title%>">수정하기</a></td>
+			<td><a href="../delete.gl?title=<%=title%>">삭제하기</a></td>
 			
 			</tr>
 			<%} %>

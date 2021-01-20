@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.jdbc.PreparedStatement;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -34,9 +36,21 @@ public class GalleryServlet extends HttpServlet {
 	    }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			doPost(request,response);}
-
+			try {
+				doHandle(request,response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			doHandle(request,response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}}
+
+	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
@@ -74,10 +88,40 @@ public class GalleryServlet extends HttpServlet {
 			response.sendRedirect("gallery_admin.jsp");
 		}
 		
-		else if(command.equals("gallery/delete.gl")){
-			request.getParameter("delete1");
-			GalleryDTO galleryDTO = galleryDAO.getrealdata();
-			FileM
+		else if(command.equals("/delete.gl")){
+			String title = request.getParameter("title");
+			try {
+				galleryDAO.galDelete(title);
+				
+			} catch (SQLException e) {
+			}
+			//실제 이미지파일도 삭제해야함.
+			galleryDTO = new GalleryDTO();
+			String savePath = request.getServletContext().getRealPath("gallery/uploadImage");
+			String fullPath = savePath+galleryDTO.getFileName();
+			File file = new File(fullPath);
+			file.delete();
+			out.println("삭제되었습니다.");
+			}
+		else if(command.equals("/modify.gl")) {
+			String title = request.getParameter("title");
+			
+			ArrayList list  =galleryDAO.galleryModifySearch(title);;
+			out.print(2);
+			RequestDispatcher dis = request.getRequestDispatcher("gallery/galleryModifyForm.jsp");
+			out.print(3);
+			request.setAttribute("list", list);
+			out.print(4);
+			dis.forward(request, response);
+			
+			
+		}
+//			response.sendRedirect("gallery/gallery_admin.jsp");
+			
+			
+//			request.setAttribute("msg", "deleted");
+//			RequestDispatcher dispatch =request.getRequestDispatcher("gallery/gallery_admin.jsp");
+//			dispatch.forward(request, response);
 		}
 //		String requestURI = request.getRequestURI();
 //		String contextPath = request.getContextPath();
@@ -257,4 +301,4 @@ public class GalleryServlet extends HttpServlet {
 
 		
 	}
-}
+
