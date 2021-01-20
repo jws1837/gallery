@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +34,8 @@
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
                 <h1 class="font-weight-light">#1 Robin Minard</h1><br>
+                
+        
                 <p>소리는 공간을 구성하는데 시각적인 요소만큼 중요한 역할을 합니다. 보이는 것에 따라 다른 모습의 공간이 연출되듯이 들리는 것에 따라도 공간은 그 성질이 변하는데요. 이번 디스토리에서는 직접 작곡한 음향과 설치를 통해 변화하는 유동적인 공간을 제시하는 작가 로빈 미나드(Robin Minard)를 만나보겠습니다. </a>
             </div>
             <!-- /.col-md-4 -->
@@ -105,7 +109,7 @@
             <!-- /.col-md-4 -->
 
             <h3 class="my-4">
-                <a href="gallery.jsp"> &nbsp;&nbsp;&nbsp; >> main gallery</a>
+                <a href="../maingallery.jsp"> &nbsp;&nbsp;&nbsp; >> main gallery</a>
             </h3>
 
         </div>
