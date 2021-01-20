@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +12,7 @@
 
     <title>Small Business - Start Bootstrap Template</title>
 
+   
     <!-- Bootstrap core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -105,7 +108,7 @@
         <!-- /.row -->
 
     <h3 class="my-4">
-                <a href="gallery4.jsp"> &nbsp;&nbsp;&nbsp; >> main gallery</a>
+                <a href="../maingallery.jsp"> &nbsp;&nbsp;&nbsp; >> main gallery</a>
             </h3>
 
     

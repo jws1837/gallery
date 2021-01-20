@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,7 +100,7 @@
         <!-- /.row -->
 
      <h3 class="my-4">
-                <a href="gallery.jsp"> &nbsp;&nbsp;&nbsp; >> main gallery</a>
+                <a href="../maingallery.jsp"> &nbsp;&nbsp;&nbsp; >> main gallery</a>
             </h3>
 
     
