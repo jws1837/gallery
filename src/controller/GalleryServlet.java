@@ -46,10 +46,8 @@ public class GalleryServlet extends HttpServlet {
 		String uri = request.getRequestURI();
 		String command = uri.substring(context.length());
 		
-		System.out.println(command);
 		if(command.equals("/gallery/register.gl")) {
 			String savePath = request.getServletContext().getRealPath("gallery/uploadImage");
-			 System.out.println(savePath);
 			int sizeLimit = 1024*1024*15; //1byte단위
 			 
 			MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
@@ -74,6 +72,12 @@ public class GalleryServlet extends HttpServlet {
 			out.println("db에 업로드가 완료되었습니다. ");
 			
 			response.sendRedirect("gallery_admin.jsp");
+		}
+		
+		else if(command.equals("gallery/delete.gl")){
+			request.getParameter("delete1");
+			GalleryDTO galleryDTO = galleryDAO.getrealdata();
+			FileM
 		}
 //		String requestURI = request.getRequestURI();
 //		String contextPath = request.getContextPath();

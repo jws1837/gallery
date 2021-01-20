@@ -104,6 +104,12 @@ public class GalleryDAO {
 		return galleryList;
 		
 	}
+
+
+	public GalleryDTO getrealdata() {
+		
+		return null;
+	}
 	
 
 }

@@ -4,7 +4,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,6 +44,8 @@ List  galleryList = galleryDAO.listGallery(galleryDTO);
 				<th bgcolor="gray" width="150">제목</th>
 				<th bgcolor="gray" width="150">저자</th>
 				<th bgcolor="gray" width="100">소개글</th>
+				<th bgcolor="gray" width="100">수정</th>
+				<th bgcolor="gray" width="100">삭제</th>
 			</tr>
 			
 			
@@ -63,6 +64,9 @@ List  galleryList = galleryDAO.listGallery(galleryDTO);
 			<td><%=title%></td>
 			<td><%=author%></td>
 			<td><%=content %></td>
+			<td><form name=<%=i+1 %>> method="post" action=""><input type="submit" value="수정하기"></form></td>
+			<td><form name="delete<%=i+1 %>" method="post" action=""><input type="submit" value="수정하기"></form></td>
+			
 			</tr>
 			<%} %>
 			
