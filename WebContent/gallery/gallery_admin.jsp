@@ -47,6 +47,7 @@ List  galleryList = galleryDAO.listGallery(galleryDTO);
 				<th bgcolor="gray" width="100">소개글</th>
 			</tr>
 			
+			
 			<%
 			for(int i = 0; i<galleryList.size();i++){
 				GalleryDTO galleryDTO2 = (GalleryDTO)galleryList.get(i);
@@ -55,6 +56,7 @@ List  galleryList = galleryDAO.listGallery(galleryDTO);
 				String author =galleryDTO2.getAuthor();
 				String content =galleryDTO2.getContent();
 			%>
+			
 			
 			<tr>
 			<td><img src="../gallery/uploadImage/<%=fileName %>"  width="100px" height="100px"></td>

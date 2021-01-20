@@ -76,12 +76,13 @@ public class GalleryDAO {
 	}
 	public List listGallery(GalleryDTO galleryDTO) {
 		
-		List galleryList= new ArrayList();
+		List<GalleryDTO> galleryList= new ArrayList();
 		sql = "select * from gallery";
 		try {
 			pstmt=conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
+				galleryDTO = new GalleryDTO();
 				String fileName = rs.getString("filename");
 				String title = rs.getString("title");
 				String author = rs.getString("author");
